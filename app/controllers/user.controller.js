@@ -6,16 +6,12 @@ const path = require("path");
 const validationResponse = require("../validators/user.validation");
 const config = require("../config/config");
 const commonController = require("./common.controller");
-
-
 const rand = require("random-key");
-
 const db = require("../models");
 const { response } = require("express");
 
 
 const imagePath = config.ImageDefaultPath + config.ImageProfile;
-
 var randomstring = require("randomstring");
 
 //var utils = require('../config/utils');
@@ -35,11 +31,6 @@ const userFriend = db.user_friend;
 const Op = db.Sequelize.Op;
 const ModelHasRole = db.model_has_role;
 
-
-
-
-
-
 // Social Login
 exports.socialLogin = async (req, res) => {
   const errors = validationResult(req); // Finds the validation errors in this request and wraps them in an object with handy functions
@@ -51,7 +42,6 @@ exports.socialLogin = async (req, res) => {
 
   if (!errors.isEmpty()) {
     var results = myValidationResult(req).mapped();
-
     var response = validationResponse.response(results);
 
     return res.json({
@@ -141,7 +131,6 @@ exports.socialLogin = async (req, res) => {
         where: { email: req.body.email },
         returning: true,
       });
-
       
         User.findOne({
           where: { id: response.id },
@@ -923,9 +912,6 @@ exports.verifyOtp = (req, res) => {
     ],
   }).then(function (user) {
     if (user) {
-
-     
-
       if (user.user_otp==req.body.otp) {
 
         const items_otp = {
@@ -972,15 +958,11 @@ exports.verifyOtp = (req, res) => {
   });
 };
 
-
-
-
 // Reset user password.
 exports.create = async (req, res) => {
   try {
-
     const errors = validationResult(req); // Finds the validation errors in this request and wraps them in an object with handy functions
-  const myValidationResult = validationResult.withDefaults({
+    const myValidationResult = validationResult.withDefaults({
     formatter: (error) => {
       return { msg: error.msg };
     },
@@ -1093,12 +1075,7 @@ exports.create = async (req, res) => {
           message: message,
         });
       }
-
-    }
-    
-
-    
-    
+    }    
   } catch (error) {
     console.log(error);
     var message = "Some error occurred while genrating Otp.";
@@ -1108,6 +1085,5 @@ exports.create = async (req, res) => {
       message: message,
     });
   }
-
   
 };
